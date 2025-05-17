@@ -1,0 +1,32 @@
+gcloud auth list 
+gcloud auth login
+gcloud auth application-default login   → set default login
+gcloud config set project PROJECT_ID
+gcloud config get-value project  -- To check the currently active project in your gcloud session,
+gcloud projects  list -- this gives all the projects access to the account
+
+--------------------------------------------------
+Generate an Application Default Credential (ADC)
+  gcloud auth application-default login
+
+
+Run Docker as Your User
+
+docker run -ti \
+  -v $HOME/.config/gcloud:/root/.config/gcloud \
+  -e GOOGLE_APPLICATION_CREDENTIALS="/root/.config/gcloud/application_default_credentials.json" \
+  --user $(id -u):$(id -g) \
+  prowlercloud/prowler gcp --project-id sublime-amp-160011 --output-formats csv html
+
+Find the Container ID:
+docker ps -a
+
+Copy the Output Files to Your Host Machine
+docker cp 01b3f9f099fc:/home/prowler/output/ /home/kali/prowler-reports/
+
+Remove the Container When Done:
+
+docker rm <container_id>
+
+-----------------------------------
+https://www.trendmicro.com/
